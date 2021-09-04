@@ -37,16 +37,6 @@ const metrics = {
     xx_large: 48,
     xxx_large: 64,
   },
-  specific: {
-    avoidButtonPadding: 72,
-    headerHeight: 44,
-    submitButtonHeight: 56,
-  },
-  thickness: {
-    small: 1,
-    medium: 2,
-    large: 4,
-  },
 };
 
 export default metrics;
