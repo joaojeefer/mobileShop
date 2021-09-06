@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     fontFamily: 'Nunito-Regular',
-    fontSize: metrics.font_size.small,
+    fontSize: metrics.font_size.x_small,
     lineHeight: metrics.spacing.medium,
     color: colors.secondary.light,
     textAlign: 'center',
