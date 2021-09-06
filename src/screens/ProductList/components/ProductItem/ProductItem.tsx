@@ -1,10 +1,12 @@
-import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useNavigation} from '@react-navigation/native';
 import {Product} from '../../../../models.ts/product';
+import {CartContext} from '../../../../contexts/CartContext';
+import {intlCurrencyFormat} from '../../../../utils/formatting';
 import {colors} from '../../../../styles';
-import styles from './styles';
+import styles, {Container} from './styles';
 
 interface ProductItemProps {
   product: Product;
@@ -13,14 +15,17 @@ interface ProductItemProps {
 const ProductItem: React.FC<ProductItemProps> = ({
   product,
 }: ProductItemProps) => {
-  const navigation = useNavigation();
+  const {inCart, handleAddToCart} = useContext(CartContext);
+
+  const {navigate} = useNavigation();
 
   const handleNavigateToProductDetails = () =>
-    navigation.navigate('ProductDetails');
+    navigate('ProductDetails', {product});
+
   return (
-    <TouchableOpacity
+    <Container
+      inCart={inCart(product.id)}
       disabled={product.stock === 0}
-      style={styles.container}
       onPress={handleNavigateToProductDetails}>
       <Image
         style={styles.imageArea}
@@ -31,16 +36,20 @@ const ProductItem: React.FC<ProductItemProps> = ({
         <Text style={styles.nameText} numberOfLines={3}>
           {product.name}
         </Text>
-        <Text style={styles.priceText}>{product.price}</Text>
-        <TouchableOpacity style={styles.addToCartButton} onPress={() => false}>
+        <Text style={styles.priceText}>
+          {intlCurrencyFormat(Number(product.price))}
+        </Text>
+        <TouchableOpacity
+          style={styles.addToCartButton}
+          onPress={() => handleAddToCart(product)}>
           <Icon
-            name="add-shopping-cart"
+            name={inCart(product.id) ? 'shopping-cart' : 'add-shopping-cart'}
             color={colors.primary.light}
             size={20}
           />
         </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </Container>
   );
 };
 

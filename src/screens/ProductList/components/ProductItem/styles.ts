@@ -1,17 +1,26 @@
 import {StyleSheet} from 'react-native';
+import styled from 'styled-components/native';
 import {colors, metrics} from '../../../../styles';
 
+interface ContainerProps {
+  inCart: boolean;
+}
+
+export const Container = styled.TouchableOpacity<ContainerProps>`
+  height: 150px;
+  width: 100%;
+  max-width: 350px;
+  flex-direction: row;
+  background-color: ${colors.primary.default};
+  border-radius: ${metrics.radius.medium}px;
+  border-width: 2px;
+  border-color: ${({inCart}: ContainerProps) =>
+    inCart ? colors.primary.light : colors.primary.default};
+`;
+
 const styles = StyleSheet.create({
-  container: {
-    height: 150,
-    width: '100%',
-    maxWidth: 350,
-    flexDirection: 'row',
-    borderRadius: metrics.radius.medium,
-    backgroundColor: colors.primary.default,
-  },
   imageArea: {
-    height: 150,
+    height: 146,
     width: 120,
     borderTopLeftRadius: metrics.radius.medium,
     borderBottomLeftRadius: metrics.radius.medium,
