@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     paddingVertical: metrics.spacing.x_small,
     paddingHorizontal: metrics.spacing.medium,
   },
+  backButton: {marginLeft: -3},
   emptyArea: {
     flex: 1,
     justifyContent: 'center',
@@ -20,6 +21,7 @@ const styles = StyleSheet.create({
     color: colors.secondary.light,
   },
   scrolledContent: {
+    flexGrow: 1,
     marginVertical: metrics.spacing.small,
   },
   betweenItems: {
@@ -28,10 +30,28 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: metrics.spacing.small,
   },
   priceText: {
     fontFamily: 'Nunito-Bold',
     fontSize: metrics.font_size.small,
+    lineHeight: metrics.spacing.medium,
+    color: colors.secondary.default,
+  },
+  emptyCartArea: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: metrics.spacing.small,
+    height: metrics.spacing.large,
+    width: '100%',
+    borderRadius: metrics.radius.small,
+    backgroundColor: colors.danger.dark,
+  },
+  emptyCartText: {
+    fontFamily: 'Nunito-Regular',
+    fontSize: metrics.font_size.x_small,
     lineHeight: metrics.spacing.medium,
     color: colors.secondary.default,
   },
