@@ -1,51 +1,68 @@
 import React, {createContext, Dispatch, ReactNode, useState} from 'react';
+import {CartItem} from '../models.ts/cart-item';
 import {Product} from '../models.ts/product';
 
 interface CartContextData {
   cart: CartItem[];
   setCart: Dispatch<React.SetStateAction<CartItem[]>>;
-  handleAddToCart: (productId: string, quantity?: number) => Promise<void>;
-  handleUpdateCartQuantity: (
-    productId: string,
-    quantity?: number,
-  ) => Promise<void>;
-  handleRemoveFromCart: (productId: string) => Promise<void>;
-  handleEmptyCart: () => Promise<void>;
+  inCart: (productId: string) => boolean;
+  handleAddToCart: (product: Product) => void;
+  handleSubtractFromCart: (product: Product) => void;
+  handleRemoveFromCart: (product: Product) => void;
+  handleEmptyCart: () => void;
 }
 
 interface CartProviderProps {
   children: ReactNode;
 }
 
-type CartItem = {
-  product: Product;
-  quantity: number;
-  price: number;
-};
-
 export const CartContext = createContext({} as CartContextData);
 
 export function CartProvider({children}: CartProviderProps) {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const handleAddToCart = async (productId: string, quantity?: number) => {};
+  const inCart = (productId: string) =>
+    !!cart.find(item => item.product.id === productId);
 
-  const handleUpdateCartQuantity = async (
-    productId: string,
-    quantity?: number,
-  ) => {};
+  const handleAddToCart = (product: Product) => {
+    const onlyOne = cart.find(item => item.product.id === product.id);
+    if (onlyOne) {
+      const filteredCart = cart.filter(item => item.product.id !== product.id);
+      setCart(filteredCart.concat([{product, quantity: onlyOne.quantity + 1}]));
+    } else {
+      setCart(oldCart => oldCart.concat([{product, quantity: 1}]));
+    }
+  };
 
-  const handleRemoveFromCart = async (productId: string) => {};
+  const handleSubtractFromCart = (product: Product) => {
+    const onlyOne = cart.find(item => item.product.id === product.id);
+    if (onlyOne) {
+      const filteredCart = cart.filter(item => item.product.id !== product.id);
+      if (onlyOne.quantity === 1) {
+        setCart(filteredCart);
+      } else {
+        setCart(
+          filteredCart.concat([{product, quantity: onlyOne.quantity - 1}]),
+        );
+      }
+    }
+  };
 
-  const handleEmptyCart = async () => {};
+  const handleRemoveFromCart = (product: Product) => {
+    const filteredCart = cart.filter(item => item.product.id !== product.id);
+    setCart(filteredCart);
+  };
+
+  const handleEmptyCart = () => setCart([]);
 
   return (
     <CartContext.Provider
       value={{
         cart,
         setCart,
+        inCart,
         handleAddToCart,
-        handleUpdateCartQuantity,
+        handleSubtractFromCart,
         handleRemoveFromCart,
         handleEmptyCart,
       }}>
