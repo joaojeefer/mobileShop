@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {Image, ScrollView, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Counter} from '../../components';
 import {CartContext} from '../../contexts/CartContext';
 import {intlCurrencyFormat} from '../../utils/formatting';
 import {colors} from '../../styles';
@@ -60,19 +61,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
               </Text>
             </View>
             {product.stock > 0 && (
-              <View style={styles.interactionArea}>
-                <TouchableOpacity
-                  style={styles.counterButton}
-                  onPress={() => handleSubtractFromCart(product)}>
-                  <Icon name="remove" color={colors.primary.light} size={20} />
-                </TouchableOpacity>
-                <Text style={styles.quantityText}>{String(quantity)}</Text>
-                <TouchableOpacity
-                  style={styles.counterButton}
-                  onPress={() => handleAddToCart(product)}>
-                  <Icon name="add" color={colors.primary.light} size={20} />
-                </TouchableOpacity>
-              </View>
+              <Counter
+                quantity={quantity}
+                handleAdd={() => handleAddToCart(product)}
+                handleSubtract={() => handleSubtractFromCart(product)}
+              />
             )}
           </View>
           <View style={styles.row}>

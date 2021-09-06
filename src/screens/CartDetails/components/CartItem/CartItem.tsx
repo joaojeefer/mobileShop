@@ -1,10 +1,9 @@
 import React, {useContext} from 'react';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Counter} from '../../../../components';
 import {CartContext} from '../../../../contexts/CartContext';
 import {intlCurrencyFormat} from '../../../../utils/formatting';
 import {CartItem as CartProduct} from '../../../../models.ts/cart-item';
-import {colors} from '../../../../styles';
 import styles from './styles';
 
 interface CartItemProps {
@@ -40,17 +39,11 @@ const CartItem: React.FC<CartItemProps> = ({cartItem}: CartItemProps) => {
         </Text>
       </View>
       <View style={styles.interactionArea}>
-        <TouchableOpacity
-          style={styles.counterButton}
-          onPress={() => handleSubtractFromCart(cartItem.product)}>
-          <Icon name="remove" color={colors.primary.light} size={20} />
-        </TouchableOpacity>
-        <Text style={styles.quantityText}>{String(cartItem.quantity)}</Text>
-        <TouchableOpacity
-          style={styles.counterButton}
-          onPress={() => handleAddToCart(cartItem.product)}>
-          <Icon name="add" color={colors.primary.light} size={20} />
-        </TouchableOpacity>
+        <Counter
+          quantity={cartItem.quantity}
+          handleAdd={() => handleAddToCart(cartItem.product)}
+          handleSubtract={() => handleSubtractFromCart(cartItem.product)}
+        />
       </View>
     </TouchableOpacity>
   );
