@@ -53,18 +53,19 @@ const styles = StyleSheet.create({
     color: colors.secondary.dark,
   },
   interactionArea: {
-    height: metrics.spacing.x_large,
+    height: metrics.spacing.large,
     flexDirection: 'row',
     alignItems: 'flex-end',
   },
-  input: {
-    height: metrics.spacing.x_large,
+  quantityText: {
     marginHorizontal: metrics.spacing.xx_small,
     textAlign: 'center',
+    fontSize: metrics.font_size.small,
+    color: colors.secondary.light,
   },
   counterButton: {
-    height: metrics.spacing.x_large,
-    width: metrics.spacing.large,
+    height: metrics.spacing.medium,
+    width: metrics.spacing.medium,
     borderRadius: metrics.radius.small,
     justifyContent: 'center',
     alignItems: 'center',

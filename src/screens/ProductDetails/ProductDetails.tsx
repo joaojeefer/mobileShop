@@ -1,27 +1,33 @@
-import React, {useState} from 'react';
-import {
-  Image,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {CartContext} from '../../contexts/CartContext';
+import {intlCurrencyFormat} from '../../utils/formatting';
 import {colors} from '../../styles';
 import styles from './styles';
 
-const product = {
-  id: '1',
-  createdAt: '2019-09-02T12:58:54.103Z',
-  name: 'Rustic Metal Fish',
-  price: '289.00',
-  image: 'http://lorempixel.com/640/480/food',
-  stock: 65171,
-};
+interface ProductDetailsProps {
+  navigation: any;
+  route: any;
+}
 
-const ProductDetails: React.FC = ({navigation: {goBack}}) => {
+const ProductDetails: React.FC<ProductDetailsProps> = ({
+  navigation: {goBack},
+  route,
+}) => {
+  const {product} = route.params;
+
+  const {cart, handleAddToCart, handleSubtractFromCart} =
+    useContext(CartContext);
+
   const [quantity, setQuantity] = useState(0);
+
+  useEffect(() => {
+    const productQuantity = cart.find(
+      item => item.product.id === product.id,
+    )?.quantity;
+    setQuantity(productQuantity || 0);
+  }, [cart, product]);
 
   return (
     <View style={styles.container}>
@@ -46,7 +52,7 @@ const ProductDetails: React.FC = ({navigation: {goBack}}) => {
           <View style={styles.row}>
             <View>
               <Text style={styles.priceText}>
-                {product.price}
+                {intlCurrencyFormat(product.price)}
                 <Text style={styles.aditionalInfoText}> un.</Text>
               </Text>
               <Text style={styles.stockText}>
@@ -57,17 +63,13 @@ const ProductDetails: React.FC = ({navigation: {goBack}}) => {
               <View style={styles.interactionArea}>
                 <TouchableOpacity
                   style={styles.counterButton}
-                  onPress={() => false}>
+                  onPress={() => handleSubtractFromCart(product)}>
                   <Icon name="remove" color={colors.primary.light} size={20} />
                 </TouchableOpacity>
-                <TextInput
-                  style={styles.input}
-                  value={String(quantity)}
-                  onChangeText={text => setQuantity(Number(text))}
-                />
+                <Text style={styles.quantityText}>{String(quantity)}</Text>
                 <TouchableOpacity
                   style={styles.counterButton}
-                  onPress={() => false}>
+                  onPress={() => handleAddToCart(product)}>
                   <Icon name="add" color={colors.primary.light} size={20} />
                 </TouchableOpacity>
               </View>
@@ -76,7 +78,8 @@ const ProductDetails: React.FC = ({navigation: {goBack}}) => {
           <View style={styles.row}>
             <Text style={styles.priceText}>Subtotal:</Text>
             <Text style={styles.priceText}>
-              {Number(product.price) * quantity}
+              {intlCurrencyFormat(Number(product.price) * quantity) ||
+                'R$ 0,00'}
             </Text>
           </View>
         </View>
