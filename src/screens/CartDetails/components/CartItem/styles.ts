@@ -36,13 +36,11 @@ const styles = StyleSheet.create({
     height: metrics.spacing.large,
     flexDirection: 'row',
   },
-  input: {
-    height: metrics.spacing.medium,
-    padding: 0,
-    justifyContent: 'flex-end',
+  quantityText: {
     marginHorizontal: metrics.spacing.xx_small,
     textAlign: 'center',
     fontSize: metrics.font_size.small,
+    color: colors.secondary.light,
   },
   counterButton: {
     height: metrics.spacing.medium,

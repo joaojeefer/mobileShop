@@ -1,24 +1,31 @@
-import React from 'react';
-import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import React, {useContext} from 'react';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Product} from '../../../../models.ts/product';
+import {CartContext} from '../../../../contexts/CartContext';
+import {intlCurrencyFormat} from '../../../../utils/formatting';
+import {CartItem as CartProduct} from '../../../../models.ts/cart-item';
 import {colors} from '../../../../styles';
 import styles from './styles';
 
-// extrair do contexto
-type CartItem = {
-  product: Product;
-  quantity: number;
-  price: number;
-};
-
 interface CartItemProps {
-  cartItem: CartItem;
+  cartItem: CartProduct;
 }
 
 const CartItem: React.FC<CartItemProps> = ({cartItem}: CartItemProps) => {
+  const {handleSubtractFromCart, handleAddToCart, handleRemoveFromCart} =
+    useContext(CartContext);
+
+  const handleRemoveProduct = () => {
+    Alert.alert('', 'Deseja remover este item do carrinho?', [
+      {text: 'Cancelar', onPress: () => false},
+      {text: 'Remover', onPress: () => handleRemoveFromCart(cartItem.product)},
+    ]);
+  };
+
   return (
-    <TouchableOpacity style={styles.container} onLongPress={() => false}>
+    <TouchableOpacity
+      style={styles.container}
+      onLongPress={handleRemoveProduct}>
       <Image
         style={styles.imageArea}
         source={{uri: cartItem.product.image}}
@@ -28,18 +35,20 @@ const CartItem: React.FC<CartItemProps> = ({cartItem}: CartItemProps) => {
         <Text style={styles.nameText} numberOfLines={1}>
           {cartItem.product.name}
         </Text>
-        <Text style={styles.priceText}>{cartItem.product.price}</Text>
+        <Text style={styles.priceText}>
+          {intlCurrencyFormat(Number(cartItem.product.price))}
+        </Text>
       </View>
       <View style={styles.interactionArea}>
-        <TouchableOpacity style={styles.counterButton} onPress={() => false}>
+        <TouchableOpacity
+          style={styles.counterButton}
+          onPress={() => handleSubtractFromCart(cartItem.product)}>
           <Icon name="remove" color={colors.primary.light} size={20} />
         </TouchableOpacity>
-        <TextInput
-          style={styles.input}
-          value={String(cartItem.quantity)}
-          onChangeText={() => false}
-        />
-        <TouchableOpacity style={styles.counterButton} onPress={() => false}>
+        <Text style={styles.quantityText}>{String(cartItem.quantity)}</Text>
+        <TouchableOpacity
+          style={styles.counterButton}
+          onPress={() => handleAddToCart(cartItem.product)}>
           <Icon name="add" color={colors.primary.light} size={20} />
         </TouchableOpacity>
       </View>
