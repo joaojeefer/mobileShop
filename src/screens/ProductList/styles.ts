@@ -26,10 +26,14 @@ const styles = StyleSheet.create({
   },
   scrolledContent: {
     flexGrow: 1,
-    marginTop: metrics.spacing.small,
+    marginVertical: metrics.spacing.small,
+    paddingVertical: metrics.spacing.xx_small,
   },
   betweenItems: {
     marginVertical: metrics.spacing.xx_small,
+  },
+  listFooter: {
+    marginBottom: metrics.spacing.small,
   },
 });
 
