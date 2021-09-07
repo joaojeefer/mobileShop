@@ -13,8 +13,12 @@ const ErrorHandler: React.FC<ErrorHandlerProps> = ({
 }: ErrorHandlerProps) => {
   return (
     <>
-      <Text style={styles.titleText}>{title}</Text>
-      <Text style={styles.descriptionText}>{description}</Text>
+      <Text testID="title" style={styles.titleText}>
+        {title}
+      </Text>
+      <Text testID="description" style={styles.descriptionText}>
+        {description}
+      </Text>
     </>
   );
 };
