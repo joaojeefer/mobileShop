@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {ErrorHandler} from '../../components';
@@ -13,17 +13,8 @@ interface CartDetailsProps {
 }
 
 const CartDetails: React.FC<CartDetailsProps> = ({navigation: {goBack}}) => {
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const {cart, handleEmptyCart} = useContext(CartContext);
-
-  useEffect(() => {
-    const total = cart.reduce((acc, currentValue) => {
-      acc += Number(currentValue.product.price) * currentValue.quantity;
-      return acc;
-    }, 0);
-    setTotalPrice(total);
-  }, [cart]);
+  const {cart, calculateCartTotalPrice, handleEmptyCart} =
+    useContext(CartContext);
 
   return (
     <View style={styles.container}>
@@ -38,7 +29,9 @@ const CartDetails: React.FC<CartDetailsProps> = ({navigation: {goBack}}) => {
       {cart.length > 0 && (
         <View style={styles.row}>
           <Text style={styles.priceText}>Total:</Text>
-          <Text style={styles.priceText}>{intlCurrencyFormat(totalPrice)}</Text>
+          <Text style={styles.priceText}>
+            {intlCurrencyFormat(calculateCartTotalPrice())}
+          </Text>
         </View>
       )}
       <FlatList

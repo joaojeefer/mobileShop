@@ -10,6 +10,7 @@ interface CartContextData {
   handleSubtractFromCart: (product: Product) => void;
   handleRemoveFromCart: (product: Product) => void;
   handleEmptyCart: () => void;
+  calculateCartTotalPrice: () => number;
 }
 
 interface CartProviderProps {
@@ -55,6 +56,13 @@ export function CartProvider({children}: CartProviderProps) {
 
   const handleEmptyCart = () => setCart([]);
 
+  const calculateCartTotalPrice = () => {
+    return cart.reduce((acc, currentValue) => {
+      acc += Number(currentValue.product.price) * currentValue.quantity;
+      return acc;
+    }, 0);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -65,6 +73,7 @@ export function CartProvider({children}: CartProviderProps) {
         handleSubtractFromCart,
         handleRemoveFromCart,
         handleEmptyCart,
+        calculateCartTotalPrice,
       }}>
       {children}
     </CartContext.Provider>
