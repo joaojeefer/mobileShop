@@ -23,7 +23,7 @@ export function CartProvider({children}: CartProviderProps) {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const inCart = (productId: string) =>
-    !!cart.find(item => item.product.id === productId);
+    cart.some(item => item.product.id === productId);
 
   const handleAddToCart = (product: Product) => {
     const onlyOne = cart.find(item => item.product.id === product.id);
