@@ -3,7 +3,7 @@ import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import {Counter} from '../../../../components';
 import {CartContext} from '../../../../contexts/CartContext';
 import {intlCurrencyFormat} from '../../../../utils/formatting';
-import {CartItem as CartProduct} from '../../../../models.ts/cart-item';
+import {CartItem as CartProduct} from '../../../../models/cart-item';
 import styles from './styles';
 
 interface CartItemProps {

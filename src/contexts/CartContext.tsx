@@ -1,6 +1,6 @@
 import React, {createContext, Dispatch, ReactNode, useState} from 'react';
-import {CartItem} from '../models.ts/cart-item';
-import {Product} from '../models.ts/product';
+import {CartItem} from '../models/cart-item';
+import {Product} from '../models/product';
 
 interface CartContextData {
   cart: CartItem[];

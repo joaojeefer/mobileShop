@@ -5,7 +5,7 @@ import {ErrorHandler} from '../../components';
 import {ProductItem} from './components';
 import api from '../../services/api';
 import env from '../../config/environment';
-import {Product} from '../../models.ts/product';
+import {Product} from '../../models/product';
 import {colors} from '../../styles';
 import styles from './styles';
 

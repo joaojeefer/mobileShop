@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
-import {Product} from '../../../../models.ts/product';
+import {Product} from '../../../../models/product';
 import {CartContext} from '../../../../contexts/CartContext';
 import {intlCurrencyFormat} from '../../../../utils/formatting';
 import {colors} from '../../../../styles';
