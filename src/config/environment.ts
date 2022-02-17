@@ -1,7 +1,7 @@
 const env = {
   server: {
-    baseURL: '',
-    fetchProducts: '/v1/product',
+    baseURL: 'https://5f14f53b4693a60016274ff4.mockapi.io',
+    fetchProducts: '/products',
   },
 };
 
