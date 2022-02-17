@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Product} from '../../../../models/product';
 import {CartContext} from '../../../../contexts/CartContext';
 import {intlCurrencyFormat} from '../../../../utils/formatting';
+import {RootRoutes} from '../../../../routes/types';
 import {colors} from '../../../../styles';
 import styles, {Container} from './styles';
 
@@ -20,7 +21,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
   const {navigate} = useNavigation();
 
   const handleNavigateToProductDetails = () =>
-    navigate('ProductDetails', {product});
+    navigate(RootRoutes.PRODUCT_DETAILS, {product});
 
   return (
     <Container

@@ -3,9 +3,10 @@ import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {CartDetails, ProductDetails, ProductList} from '../screens';
+import {RootRoutes, RootStackParamList} from './types';
 import {colors} from '../styles';
 
-const {Navigator, Screen} = createNativeStackNavigator();
+const {Navigator, Screen} = createNativeStackNavigator<RootStackParamList>();
 
 const Routes: React.FC = () => {
   return (
@@ -13,9 +14,12 @@ const Routes: React.FC = () => {
       <StatusBar backgroundColor={colors.primary.dark} />
       <NavigationContainer>
         <Navigator screenOptions={{headerShown: false}}>
-          <Screen name="ProductList" component={ProductList} />
-          <Screen name="ProductDetails" component={ProductDetails} />
-          <Screen name="CartDetails" component={CartDetails} />
+          <Screen name={RootRoutes.PRODUCT_LIST} component={ProductList} />
+          <Screen
+            name={RootRoutes.PRODUCT_DETAILS}
+            component={ProductDetails}
+          />
+          <Screen name={RootRoutes.CART_DETAILS} component={CartDetails} />
         </Navigator>
       </NavigationContainer>
     </>
